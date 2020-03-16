@@ -106,9 +106,18 @@ void search(int *count)
     file.close();
 }
 
+void clearfile()
+{
+    ofstream file;
+    file.open(filename, ios::out);
+    file.close();
+}
+
 int main()
 {
     int ch, count = 0;
+
+    clearfile();
 
     while (true)
     {
