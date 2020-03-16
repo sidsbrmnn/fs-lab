@@ -22,19 +22,18 @@ public:
 
     void pack(int *count)
     {
-        char buffer[50];
         char str[10];
 
-        sprintf(str, "%d", count);
+        sprintf(str, "%d", *count);
         strcpy(buffer, str);
         strcat(buffer, "|");
-        strcpy(buffer, usn);
+        strcat(buffer, usn);
         strcat(buffer, "|");
-        strcpy(buffer, name);
+        strcat(buffer, name);
         strcat(buffer, "|");
-        strcpy(buffer, sem);
+        strcat(buffer, sem);
         strcat(buffer, "|");
-        strcpy(buffer, dept);
+        strcat(buffer, dept);
         strcat(buffer, "\n");
         (*count)++;
     }
