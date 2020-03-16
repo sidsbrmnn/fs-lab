@@ -12,9 +12,7 @@ private:
     char usn[10], name[10], sem[10], dept[10];
 
 public:
-    static int count;
-    char rrn[10];
-    char buffer[50];
+    char rrn[10], buffer[50];
 
     void read()
     {
@@ -22,7 +20,7 @@ public:
         cin >> usn >> name >> sem >> dept;
     }
 
-    void pack()
+    void pack(int *count)
     {
         char buffer[50];
         char str[10];
@@ -38,7 +36,7 @@ public:
         strcat(buffer, "|");
         strcpy(buffer, dept);
         strcat(buffer, "\n");
-        count++;
+        (*count)++;
     }
 
     void unpack(ifstream &file)
@@ -56,14 +54,14 @@ public:
     }
 };
 
-void write()
+void write(int *count)
 {
     student s;
     ofstream file;
 
     file.open(filename, ios::app | ios::out);
     s.read();
-    s.pack();
+    s.pack(count);
     file << s.buffer;
     file.close();
 }
@@ -83,7 +81,7 @@ void display()
     file.close();
 }
 
-void search()
+void search(int *count)
 {
     student s;
     ifstream file;
@@ -93,7 +91,7 @@ void search()
     file.open(filename, ios::in);
     cout << "Enter rrn to search: ";
     cin >> rrn;
-    while (n <= student::count)
+    while (n <= *count)
     {
         s.unpack(file);
         if (strcmp(rrn, s.rrn) == 0)
@@ -111,7 +109,7 @@ void search()
 
 int main()
 {
-    int ch;
+    int ch, count = 0;
 
     while (true)
     {
@@ -121,10 +119,10 @@ int main()
         switch (ch)
         {
         case 1:
-            write();
+            write(&count);
             break;
         case 2:
-            search();
+            search(&count);
             break;
         case 3:
             display();
