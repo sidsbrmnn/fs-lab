@@ -9,10 +9,7 @@ const string filename = "abc.txt";
 class student
 {
 private:
-    char usn[10];
-    char name[10];
-    char sem[10];
-    char dept[10];
+    char usn[10], name[10], sem[10], dept[10];
 
 public:
     static int count;

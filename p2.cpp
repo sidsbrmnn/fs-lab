@@ -9,25 +9,12 @@ const string filename = "student.txt";
 class student
 {
 public:
-    char name[15];
-    char usn[15];
-    char age[5];
-    char sem[5];
-    char branch[15];
-    char buffer[45];
+    char name[15], usn[15], age[5], sem[5], branch[15], buffer[45];
 
     void read()
     {
-        cout << "Enter student name: ";
-        cin >> name;
-        cout << "Enter student usn: ";
-        cin >> usn;
-        cout << "Enter student age: ";
-        cin >> age;
-        cout << "Enter student sem: ";
-        cin >> sem;
-        cout << "Enter student branch: ";
-        cin >> branch;
+        cout << "Enter name, usn, age, sem, branch: ";
+        cin >> name >> usn >> age >> sem >> branch;
     }
 
     void pack()
@@ -121,8 +108,8 @@ void display()
     file.open(filename, ios::in);
     if (!file)
         nofile();
-    cout << "NAME\t\tUSN\t\tAGE\t\tSEM\t\tBRANCH" << endl;
-    cout << "----\t\t---\t\t---\t\t---\t\t------" << endl;
+    cout << "NAME\tUSN\tAGE\tSEM\tBRANCH" << endl;
+    cout << "----\t---\t---\t---\t------" << endl;
     while (!file.eof())
     {
         s.unpack(file);
