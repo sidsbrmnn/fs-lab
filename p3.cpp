@@ -1,24 +1,21 @@
-#include <iostream>
-#include <fstream>
 #include <cstring>
+#include <fstream>
+#include <iostream>
+
+#define FILENAME "student.txt"
 
 using namespace std;
 
-const string filename = "student.txt";
-
-class student
-{
+class student {
 public:
     char name[15], usn[15], age[5], sem[5], branch[15], buffer[45];
 
-    void read()
-    {
+    void read() {
         cout << "Enter name, usn, age, sem, branch: ";
         cin >> name >> usn >> age >> sem >> branch;
     }
 
-    void pack()
-    {
+    void pack() {
         strcpy(buffer, name);
         strcat(buffer, "|");
         strcat(buffer, usn);
@@ -31,13 +28,12 @@ public:
         strcat(buffer, "\n");
     }
 
-    void print()
-    {
-        cout << name << "\t" << usn << "\t" << age << "\t" << sem << "\t" << branch << endl;
+    void print() {
+        cout << name << "\t" << usn << "\t" << age << "\t" << sem << "\t"
+             << branch << endl;
     }
 
-    void unpack(fstream &file)
-    {
+    void unpack(fstream &file) {
         file.getline(name, 15, '|');
         file.getline(usn, 15, '|');
         file.getline(age, 5, '|');
@@ -46,18 +42,16 @@ public:
     }
 };
 
-void nofile()
-{
+void nofile() {
     cout << "Could not open the file." << endl;
     exit(1);
 }
 
-void write()
-{
+void write() {
     fstream file;
     student s;
 
-    file.open(filename, ios::app | ios::out);
+    file.open(FILENAME, ios::app | ios::out);
     if (!file)
         nofile();
     s.read();
@@ -66,22 +60,19 @@ void write()
     file.close();
 }
 
-void search()
-{
+void search() {
     fstream file;
     student s;
     char usn[15];
 
-    file.open(filename, ios::in);
+    file.open(FILENAME, ios::in);
     if (!file)
         nofile();
     cout << "Enter usn to search: ";
     cin >> usn;
-    while (!file.eof())
-    {
+    while (!file.eof()) {
         s.unpack(file);
-        if (strcmp(s.usn, usn) == 0)
-        {
+        if (strcmp(s.usn, usn) == 0) {
             cout << "Record found." << endl;
             s.print();
             file.close();
@@ -93,18 +84,16 @@ void search()
     file.close();
 }
 
-void display()
-{
+void display() {
     fstream file;
     student s;
 
-    file.open(filename, ios::in);
+    file.open(FILENAME, ios::in);
     if (!file)
         nofile();
     cout << "NAME\t\tUSN\t\tAGE\t\tSEM\t\tBRANCH" << endl;
     cout << "----\t\t---\t\t---\t\t---\t\t------" << endl;
-    while (!file.eof())
-    {
+    while (!file.eof()) {
         s.unpack(file);
         s.print();
     }
@@ -112,30 +101,26 @@ void display()
     file.close();
 }
 
-void modify()
-{
+void modify() {
     fstream file;
     student s[100];
     char usn[15];
     int i, count = 0;
 
-    file.open(filename, ios::in);
+    file.open(FILENAME, ios::in);
     if (!file)
         nofile();
     cout << "Enter usn: ";
     cin >> usn;
-    while (!file.eof())
-    {
+    while (!file.eof()) {
         s[count].unpack(file);
         count++;
     }
     file.close();
     count--;
 
-    for (i = 0; i < count; i++)
-    {
-        if (strcmp(usn, s[i].usn) == 0)
-        {
+    for (i = 0; i < count; i++) {
+        if (strcmp(usn, s[i].usn) == 0) {
             s[i].print();
             cout << "Enter new values: " << endl;
             s[i].read();
@@ -143,34 +128,29 @@ void modify()
         }
     }
 
-    if (i == count)
-    {
+    if (i == count) {
         cout << "Record not found." << endl;
         return;
     }
 
-    file.open(filename, ios::out);
+    file.open(FILENAME, ios::out);
     if (!file)
         nofile();
-    for (i = 0; i < count; i++)
-    {
+    for (i = 0; i < count; i++) {
         s[i].pack();
         file << s[i].buffer;
     }
     file.close();
 }
 
-int main()
-{
+int main() {
     int ch;
 
-    while (true)
-    {
+    while (true) {
         cout << "1. Insert\n2. Search\n3. Display\n4. Modify" << endl;
         cout << "Enter your choice: ";
         cin >> ch;
-        switch (ch)
-        {
+        switch (ch) {
         case 1:
             write();
             break;
